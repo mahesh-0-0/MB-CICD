@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Club</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Prediction Club</h1>
+        
+        <!-- Form for input fields -->
+        <form method="POST" class="form">
+            <div class="form-group">
+                <label for="applicant_income">Applicant Income:</label>
+                <input type="number" id="applicant_income" name="Applicant Income" placeholder="Enter your income" required />
+            </div>
+            <div class="form-group">
+                <label for="credit_history">Credit History:</label>
+                <input type="number" id="credit_history" name="Credit History" placeholder="Enter credit history" required />
+            </div>
+            <div class="form-group">
+               <label for="gender">Select Gender:</label>
+               <div class="gender-buttons">
+                   <input type="radio" id="male" name="gender" value="Male" required />
+                   <label for="male" class="gender-button male">Male</label>
+           
+                   <input type="radio" id="female" name="gender" value="Female" />
+                   <label for="female" class="gender-button female">Female</label>
+               </div>
+           </div>           
+            <div class="form-group">
+                <label for="loan_amount">Loan Amount:</label>
+                <input type="number" id="loan_amount" name="Loan Amount" placeholder="Enter loan amount" required />
+            </div>
+            <div class="form-group">
+                <label for="marriage">Marriage Status:</label>
+                <select id="marriage" name="marriage" required>
+                    <option value="Married">Married</option>
+                    <option value="Unmarried">Unmarried</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn">Predict</button>
+        </form>
+
+        <!-- Display prediction result if available -->
+        {% if prediction %}
+        <h2>Prediction Result:</h2>
+        <table class="result-table">
+            <thead>
+                <tr>
+                    <th>Applicant Income</th>
+                    <th>Credit History</th>
+                    <th>Gender</th>
+                    <th>Loan Amount</th>
+                    <th>Marriage Status</th>
+                    <th>Prediction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ applicant_income if applicant_income is not none else "NA" }}</td>
+                    <td>{{ credit_history if credit_history is not none else "NA" }}</td>
+                    <td>{{ gender if gender is not none else "NA" }}</td>
+                    <td>{{ loan_amount if loan_amount is not none else "NA" }}</td>
+                    <td>{{ marriage_status if marriage_status is not none else "NA" }}</td>
+                    <td class="prediction {{ 'approved' if prediction == 'Approved' else 'rejected' }}">
+                        {{ prediction if prediction is not none else "NA" }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
